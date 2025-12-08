@@ -39,7 +39,7 @@ const createStagiaire = async (req, res) => {
             return res.status(400).json({ error: 'Stagiaire with this email already exists' });
         }
 
-        const hashedPassword = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
+        const hashedPassword = bcrypt.hashSync(process.env.DEFAULT_PASSWORD, 10);
 
         //  Create user
         const [userResult] = await pool.query(
