@@ -1,6 +1,6 @@
 const pool = require('../db');
-require('dotenv').config();
-const bcrypt = require('bcrypt'); // use bcrypt for password hashing
+// require('dotenv').config();
+const bcrypt = require('bcryptjs'); // use bcrypt for password hashing
 
 
 const getAllStagiaires =  async (req , res)=>{

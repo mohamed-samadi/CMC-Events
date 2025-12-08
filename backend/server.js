@@ -1,6 +1,6 @@
+const cors = require("cors");
 const express = require('express');
 const app = express();
-const cors = require("cors");
 
 const pool = require('./db');
 app.use(cors())
@@ -11,13 +11,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
-// app.get('/stagiaires', getAllStagiaires);
-// app.get('/stagiaires/:id', getStagiaireById);
-// app.delete('/stagiaires/:id', deleteStagiaire);
-// app.post('/stagiaires', createStagiaire);
-// app.put('/stagiaires/:id', updateStagiaire);
 
 
 //manage api stagiaire routes
