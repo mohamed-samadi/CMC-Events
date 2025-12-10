@@ -15,6 +15,9 @@ const polesRoutes = require('./routes/poleRoutes');
 const filiereRoutes = require('./routes/filiereRoutes');
 const groupeRoutes = require('./routes/groupeRoutes');
 
+const eventRoutes = require('./routes/eventRoutes');
+const userRouter = require('./routes/userRoutes');
+
 app.get('/', (req, res) => {
     res.send('API is working');
 });
@@ -33,8 +36,10 @@ app.use('/api/filieres', filiereRoutes);
 //manage api groupe routes
 app.use('/api/groupes', groupeRoutes);
 
+//manage api event routes
+app.use('/api/events', eventRoutes);
 
-
+app.use('/api/users' , userRouter) ;
 
 const PORT = process.env.PORT || 5001;
 

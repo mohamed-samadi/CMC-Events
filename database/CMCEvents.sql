@@ -9,7 +9,8 @@ use CMCEvents ;
 --     role ENUM('ADMIN', 'STAGIAIRE', 'FORMATEUR') NOT NULL
 -- );
 
--- -- POLES
+-- alter table users add column name varchar(80) not null ;
+-- POLES
 -- CREATE TABLE IF NOT EXISTS poles (
 --     id INT AUTO_INCREMENT PRIMARY KEY,
 --     name VARCHAR(100) NOT NULL UNIQUE
@@ -150,47 +151,6 @@ use CMCEvents ;
 --     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
 -- );
 
-SELECT 
-    e.id,
-    e.title,
-    e.description,
-    e.date_start,
-    e.date_end,
-    e.location,
-    e.created_at,
-
-    -- Likes count
-    SUM(CASE WHEN l.status = 'LIKE' THEN 1 ELSE 0 END) AS likes_count,
-
-    -- Unlikes count
-    SUM(CASE WHEN l.status = 'UNLIKE' THEN 1 ELSE 0 END) AS unlikes_count,
-
-    -- Images (comma separated list)
-    GROUP_CONCAT(DISTINCT i.image_url) AS images,
-
-    -- Comments with user details in JSON format
-    GROUP_CONCAT(
-        DISTINCT JSON_OBJECT(
-            'id', c.id,
-            'content', c.content,
-            'created_at', c.created_at,
-            'user_id', c.user_id,
-            'first_name', s.first_name,
-            'last_name', s.last_name
-        )
-        SEPARATOR '||'
-    ) AS comments
-
-FROM events e
-LEFT JOIN likes l        ON e.id = l.event_id
-LEFT JOIN event_images i ON e.id = i.event_id
-LEFT JOIN comments c     ON e.id = c.event_id
-LEFT JOIN stagiaires s        ON c.user_id = s.id
-
-GROUP BY e.id
-ORDER BY e.created_at DESC;
-
-
 
 
 
@@ -219,3 +179,41 @@ ORDER BY e.created_at DESC;
 -- -- 3. Use that id in stagaires
 -- insert into stagaires (id,  first_name , last_name , email ,  CEF ,groupe_id )
 -- values (LAST_INSERT_ID(),"jiji" , "samadi" ,'jiji@gmail.com', "2003022500333" , 1) ;
+
+
+
+
+SELECT 
+    e.id AS event_id,
+    e.title,
+    e.description,
+    e.date_start,
+    e.date_end,
+    e.location,
+    e.created_at,
+
+    SUM(CASE WHEN l.status = 'LIKE' THEN 1 ELSE 0 END) AS likes_count,
+    SUM(CASE WHEN l.status = 'UNLIKE' THEN 1 ELSE 0 END) AS unlikes_count,
+
+    GROUP_CONCAT(DISTINCT i.image_url) AS images,
+
+    GROUP_CONCAT(
+        DISTINCT CONCAT(
+            c.id, ':::',
+            c.content, ':::',
+            c.created_at, ':::',
+            u.id, ':::',
+            u.name, ':::',
+            u.email
+        )
+        SEPARATOR '||'
+    ) AS comments
+
+FROM events e
+LEFT JOIN likes l        ON e.id = l.event_id
+LEFT JOIN event_images i ON e.id = i.event_id
+LEFT JOIN comments c     ON e.id = c.event_id
+LEFT JOIN users u        ON c.user_id = u.id
+
+GROUP BY e.id
+ORDER BY e.created_at DESC

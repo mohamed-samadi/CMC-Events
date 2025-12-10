@@ -43,8 +43,8 @@ const createStagiaire = async (req, res) => {
 
         //  Create user
         const [userResult] = await pool.query(
-            'INSERT INTO users (email, password, role) VALUES (?, ?, ?)',
-            [email, hashedPassword, 'STAGIAIRE']
+            'INSERT INTO users (email, password, role , name ) VALUES (?, ?, ? , ?)',
+            [email, hashedPassword, 'STAGIAIRE' , first_name + ' ' + last_name]
         );
         const userId = userResult.insertId;
 
@@ -105,8 +105,8 @@ const updateStagiaire = async (req, res) => {
             return res.status(400).json({ error: 'Un utilisateur avec cet email existe déjà' });
         }
         const [resultUser] = await pool.query(
-            'UPDATE users SET email = ? WHERE id = ?',
-            [email, id]
+            'UPDATE users SET email = ? , name = ?  WHERE id = ?',
+            [email, first_name + ' '+ last_name , id]
         );
 
         res.status(200).json({ message: 'Stagiaire mis à jour avec succès' });
