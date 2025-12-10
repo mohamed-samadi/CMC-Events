@@ -6,7 +6,13 @@ const app = express();
 const pool = require('./db');
 app.use(cors())
 app.use(express.json());
+
+
+
 const stagiaireRoutes = require('./routes/stagiaireRoutes');
+const formateurRoutes = require('./routes/formateurRoutes');
+const polesRoutes = require('./routes/poleRoutes');
+const filiereRoutes = require('./routes/filiereRoutes');
 app.get('/', (req, res) => {
     res.send('API is working');
 });
@@ -16,7 +22,12 @@ app.get('/', (req, res) => {
 
 //manage api stagiaire routes
 app.use('/api/stagiaires', stagiaireRoutes);
-
+//manage api formateur routes
+app.use('/api/formateurs', formateurRoutes);
+//manage api poles routes
+app.use('/api/poles', polesRoutes);
+//manage api filiere routes
+app.use('/api/filieres', filiereRoutes);
 
 const PORT = process.env.PORT || 5001;
 
