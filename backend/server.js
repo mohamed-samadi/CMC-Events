@@ -13,6 +13,8 @@ const stagiaireRoutes = require('./routes/stagiaireRoutes');
 const formateurRoutes = require('./routes/formateurRoutes');
 const polesRoutes = require('./routes/poleRoutes');
 const filiereRoutes = require('./routes/filiereRoutes');
+const groupeRoutes = require('./routes/groupeRoutes');
+
 app.get('/', (req, res) => {
     res.send('API is working');
 });
@@ -28,6 +30,11 @@ app.use('/api/formateurs', formateurRoutes);
 app.use('/api/poles', polesRoutes);
 //manage api filiere routes
 app.use('/api/filieres', filiereRoutes);
+//manage api groupe routes
+app.use('/api/groupes', groupeRoutes);
+
+
+
 
 const PORT = process.env.PORT || 5001;
 

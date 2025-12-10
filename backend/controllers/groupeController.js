@@ -1,7 +1,7 @@
 const pool = require('../db');
 
 
-const gatAllgroupes =  async (req , res)=>{
+const getAllGroupes =  async (req , res)=>{
     try{
         const [rows] = await pool.query('SELECT * FROM groupes');
         res.status(200).send(rows);
@@ -84,7 +84,7 @@ const updateGroupe = async (req, res) => {
 };
 
 module.exports = {
-    gatAllgroupes,
+    getAllGroupes,
     deleteGroupe,
     createGroupe,
     getGroupeById,
