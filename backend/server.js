@@ -18,19 +18,34 @@ const groupeRoutes = require('./routes/groupeRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const userRouter = require('./routes/userRoutes');
 
+const authRoutes = require('./routes/authRoutes');
+
+//verfiy  athentifcation
+const {auth} = require('./middleware/auth');
+//verfiy role of user
+
+const {authorize } = require('./middleware/authorize') ;
 app.get('/', (req, res) => {
     res.send('API is working');
 });
 
 
+//using JWT for authentication
+app.use('/api/auth', authRoutes);
+
+
+
+
+
+
 
 
 //manage api stagiaire routes
-app.use('/api/stagiaires', stagiaireRoutes);
+app.use('/api/stagiaires'  , stagiaireRoutes);
 //manage api formateur routes
 app.use('/api/formateurs', formateurRoutes);
 //manage api poles routes
-app.use('/api/poles', polesRoutes);
+app.use('/api/poles',auth , authorize("ADMIN" , "FORMATEUR") ,  polesRoutes);
 //manage api filiere routes
 app.use('/api/filieres', filiereRoutes);
 //manage api groupe routes
@@ -40,6 +55,12 @@ app.use('/api/groupes', groupeRoutes);
 app.use('/api/events', eventRoutes);
 
 app.use('/api/users' , userRouter) ;
+
+
+
+
+
+
 
 const PORT = process.env.PORT || 5001;
 
