@@ -3,9 +3,10 @@ const router = express.Router();
 
 
 const {
-     updateUserPassword
+     updateUserPassword , getUserByEmailPwd
 } =  require('../controllers/usersController') ;
 
 router.put('/:id' , updateUserPassword ) ;
+router.post('/' , getUserByEmailPwd) ;
 
 module.exports = router ;
