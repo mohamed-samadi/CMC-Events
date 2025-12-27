@@ -30,18 +30,13 @@ const {auth} = require('./middleware/auth');
 //verfiy role of user
 
 const {authorize } = require('./middleware/authorize') ;
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('API is working');
 });
 
 
 //using JWT for authentication
 app.use('/api/auth', authRoutes);
-
-
-
-
-
 
 
 
