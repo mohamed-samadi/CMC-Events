@@ -20,6 +20,11 @@ const userRouter = require('./routes/userRoutes');
 
 const authRoutes = require('./routes/authRoutes');
 
+const sendEmail = require('./SendEmail/transporter') ;
+
+app.post("/send-email", sendEmail );
+
+
 //verfiy  athentifcation
 const {auth} = require('./middleware/auth');
 //verfiy role of user
